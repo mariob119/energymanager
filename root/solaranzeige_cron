@@ -1,5 +1,5 @@
-@reboot             /var/www/html/usb_init.php                  >/dev/null
-*     *  *  *  *    /var/www/html/regler_auslesen.php          >/dev/null
+@reboot             /var/www/html/multi_usb_init.php                  >/dev/null
+*     *  *  *  *    /var/www/html/multi_regler_auslesen.php          >/dev/null
 *     *  *  *  *    /var/www/html/checkreboot.sh               >/dev/null
 1     0  *  *  *    /usr/local/sbin/truncate_log               >/dev/null
 20,50 *  *  *  *    /var/www/html/wetterdaten.php              >/dev/null

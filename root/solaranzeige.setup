@@ -61,12 +61,12 @@ grafana-cli plugins install briangann-gauge-panel
 
 echo ""
 echo "Make MultiRegler files"
-cp  /var/www/html/user.config.php   /var/www/html/1.user.config.php
-cp  /var/www/html/user.config.php   /var/www/html/2.user.config.php
-cp  /var/www/html/user.config.php   /var/www/html/3.user.config.php
-cp  /var/www/html/user.config.php   /var/www/html/4.user.config.php
-cp  /var/www/html/user.config.php   /var/www/html/5.user.config.php
-cp  /var/www/html/user.config.php   /var/www/html/6.user.config.php
+cp  /tempFiles/user.config/1.user.config.php /var/www/html/1.user.config.php
+cp  /tempFiles/user.config/2.user.config.php /var/www/html/2.user.config.php
+cp  /tempFiles/user.config/3.user.config.php /var/www/html/3.user.config.php
+cp  /tempFiles/user.config/4.user.config.php /var/www/html/4.user.config.php
+cp  /tempFiles/user.config/5.user.config.php /var/www/html/5.user.config.php
+cp  /tempFiles/user.config/6.user.config.php /var/www/html/6.user.config.php
 
 echo ""
 echo "##############################################################################################"
