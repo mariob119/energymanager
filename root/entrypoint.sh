@@ -31,7 +31,7 @@ fi
 ln -fs /usr/share/zoneinfo/${TIMEZONE} /etc/localtime
 dpkg-reconfigure -f noninteractive tzdata
 
-echo "${USERNAME}:x:${USER_ID}:${GROUP_ID}:${USERNAME}:/:/sbin/nologin" >> /etc/passwd
+echo "${USERNAME}:x:${USER_ID}:${GROUP_ID}:${USERNAME}:/:/bin/nologin" >> /etc/passwd
 echo "${USERNAME}:!::0:::::" >> /etc/shadow
 
 if ! getent group ${GROUP_ID}; then
@@ -39,7 +39,9 @@ if ! getent group ${GROUP_ID}; then
 fi
 
 if [[ ! -f /var/www/html/user.config.php ]]; then
-  /usr/local/sbin/solaranzeige.setup
+  cd /usr/local/bin
+  sed -i -e 's/\r$//' solaranzeige.setup
+  /usr/local/bin/solaranzeige.setup
 fi
 
 #Install Missing Files after possible Container Update
@@ -69,16 +71,16 @@ if [[ ! -f /var/www/html/pheditor.php ]]; then
   cp -R /tmp/git/solar_config/solaranzeige /
   mv /tmp/solaranzeige_cron /solaranzeige
   cd /var/www/html && rm -rf /tmp/git
-  su -s /bin/bash -c "TERM=xterm /usr/local/sbin/solaranzeige.update"
-  su -s /bin/bash -c "TERM=xterm /usr/local/sbin/pvforecast.update"
+  su -s /bin/bash -c "TERM=xterm /usr/local/bin/solaranzeige.update"
+  su -s /bin/bash -c "TERM=xterm /usr/local/bin/pvforecast.update"
   curl -s 'https://raw.githubusercontent.com/DeBaschdi/solar_config/master/html/index.php' > /var/www/html/index.php
   curl -s 'https://raw.githubusercontent.com/DeBaschdi/solar_config/master/html/pheditor.php' > /var/www/html/pheditor.php
   UPDATE='no'
 fi
 
 if [[ "${UPDATE}" = "yes" ]]; then
-  /usr/local/sbin/solaranzeige.update
-  /usr/local/sbin/pvforecast.update
+  /usr/local/bin/solaranzeige.update
+  /usr/local/bin/pvforecast.update
   curl -s 'https://raw.githubusercontent.com/DeBaschdi/solar_config/master/html/index.php' > /var/www/html/index.php
 fi
 
@@ -102,4 +104,4 @@ chmod -R 777 /var/lib/influxdb
 chmod -R 777 /var/lib/grafana
 chmod -R 777 /run/mosquitto
 
-su -s /bin/bash -c "TERM=xterm /usr/local/sbin/solaranzeige.process"
+su -s /bin/bash -c "TERM=xterm /usr/local/bin/solaranzeige.process"

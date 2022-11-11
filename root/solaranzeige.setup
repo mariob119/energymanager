@@ -42,11 +42,11 @@ chmod -R 777 /var/lib/grafana
 chmod -R 777 /pvforecast
 chmod -R 777 /run/mosquitto
 
-su -s /bin/bash -c "TERM=xterm /usr/local/sbin/solaranzeige.update"
+su -s /bin/bash -c "TERM=xterm /usr/local/bin/solaranzeige.update"
 
 echo ""
 echo "Installing PVForecast..."
-su -s /bin/bash -c "TERM=xterm /usr/local/sbin/pvforecast.update"
+su -s /bin/bash -c "TERM=xterm /usr/local/bin/pvforecast.update"
 
 chmod +x /solaranzeige/setup
 chmod +x /solaranzeige/statusmail

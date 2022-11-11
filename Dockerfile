@@ -30,11 +30,13 @@ ENV USER_ID="99" \
     CLEANUP="/tmp/* /var/tmp/* /var/log/* /var/lib/apt/lists/* /var/lib/{apt,dpkg,cache,log}/ /var/cache/apt/archives /usr/share/doc/ /usr/share/man/ /usr/share/locale/ "
 
 # Copy files in the right directory
-COPY root/entrypoint /usr/local/sbin/entrypoint
-COPY root/solaranzeige.process /usr/local/sbin/solaranzeige.process
-COPY root/solaranzeige.update /usr/local/sbin/solaranzeige.update
-COPY root/solaranzeige.setup /usr/local/sbin/solaranzeige.setup
-COPY root/pvforecast.update /usr/local/sbin/pvforecast.update
+COPY root/entrypoint.sh /
+RUN chmod +x entrypoint.sh
+RUN cp entrypoint.sh /usr/local/bin
+COPY root/solaranzeige.process /usr/local/bin/solaranzeige.process
+COPY root/solaranzeige.update /usr/local/bin/solaranzeige.update
+COPY root/solaranzeige.setup /usr/local/bin/solaranzeige.setup
+COPY root/pvforecast.update /usr/local/bin/pvforecast.update
 
 RUN apt-get -qy update 
 
@@ -98,11 +100,11 @@ RUN grafana-cli plugins install fetzerch-sunandmoon-datasource \
     && grafana-cli plugins install agenty-flowcharting-panel 
 
 ### alter permissions
-RUN chmod +x /usr/local/sbin/entrypoint \
-    && chmod +x /usr/local/sbin/solaranzeige.process \
-    && chmod +x /usr/local/sbin/solaranzeige.update \
-    && chmod +x /usr/local/sbin/solaranzeige.setup \
-    && chmod +x /usr/local/sbin/pvforecast.update 
+RUN chmod +x /usr/local/bin/entrypoint.sh \
+    && chmod +x /usr/local/bin/solaranzeige.process \
+    && chmod +x /usr/local/bin/solaranzeige.update \
+    && chmod +x /usr/local/bin/solaranzeige.setup \
+    && chmod +x /usr/local/bin/pvforecast.update 
 
 ### cleanup
 RUN apt-get remove --purge -qy ${BUILD_DEPENDENCIES} \
@@ -111,18 +113,18 @@ RUN apt-get remove --purge -qy ${BUILD_DEPENDENCIES} \
     && apt-get -qy autoremove --purge \
     && rm -rf ${CLEANUP}
 
-COPY root/update /usr/local/sbin/update
-COPY root/truncate_log /usr/local/sbin/truncate_log
+COPY root/update /usr/local/bin/update
+COPY root/truncate_log /usr/local/bin/truncate_log
 COPY root/solaranzeige_cron /etc/cron.d/solaranzeige_cron
 
-RUN chmod +x /usr/local/sbin/update \
-    && chmod +x /usr/local/sbin/truncate_log \
+RUN chmod +x /usr/local/bin/update \
+    && chmod +x /usr/local/bin/truncate_log \
     && chmod 0644 /etc/cron.d/solaranzeige_cron \
     && crontab /etc/cron.d/solaranzeige_cron
 
 COPY tempFiles/ /tempFiles
 
-ENTRYPOINT [ "/usr/local/sbin/entrypoint" ]
+ENTRYPOINT [ "/usr/local/bin/entrypoint.sh" ]
 
 VOLUME /solaranzeige
 VOLUME /pvforecast
