@@ -3,12 +3,12 @@ FROM amd64/debian:bullseye-slim AS build
 # _______________________________________________________________________
 # 
 # Notes
-# This dockerfile is an extension from the image: takealug/solaranzeige
+# The base image for this project is takealug/solaranzeige
+# The creator of the base image is Bastian Kleinschmidt <debaschdi@googlemail.com>
 # _______________________________________________________________________
 
 # Labels
-LABEL maintainer="Bastian Kleinschmidt <debaschdi@googlemail.com>" \
-      org.label-schema.docker.dockerfile="/Dockerfile" \
+LABEL org.label-schema.docker.dockerfile="/Dockerfile" \
       org.label-schema.name="docker.solaranzeige"
 
 # Arguments
