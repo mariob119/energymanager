@@ -88,6 +88,14 @@ RUN apt install -y influxdb grafana mosquitto mosquitto-clients libmosquitto-dev
     && pecl install Mosquitto-alpha \
     && echo "extension=mosquitto.so" | tee -a /etc/php/7.4/mods-available/mosquitto.ini 
 
+### install pyhton
+RUN apt-get install -qy python3-pip python3-elementpath python3-protobuf netcdf-bin python3-bs4 python3-requests python3-numpy python3-pandas python3-h5py python3-tables python3-netcdf4 python3-scipy python3-influxdb python3-setuptools python3-astral python3-wheel python3-wrapt python3-yaml python3-isodate \
+    && python3 -m pip install pip --upgrade \
+    && python3 -m pip install pysolcast \
+    && python3 -m pip install astral --upgrade \
+    && python3 -m pip install siphon --upgrade \
+    && python3 -m pip install pvlib 
+
 ### configure system
 RUN update-ca-certificates --fresh \
     && phpenmod mosquitto \

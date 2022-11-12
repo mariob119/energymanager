@@ -237,7 +237,7 @@ $Regler = "0";
 ******************************************************************************/
 //  GeräteID bzw. GeräteNummer Muss gleich mit der x.user.config.php sein.
 //  Bitte nur bei einer Multi-Regler-Version ändern.  [ 1 bis 6 ]
-$GeraeteNummer = "1";
+$GeraeteNummer = "2";
 //
 //  Bei einem Micro Wechselrichter von AEconversion oder LiCom Box von Effekta 
 //  und anderen Geräten, die für den Zugang eine Seriennummer benötigen.
