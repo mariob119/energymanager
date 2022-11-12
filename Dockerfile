@@ -1,4 +1,4 @@
-FROM amd64/debian:bullseye-slim AS build
+FROM debian:bullseye-slim AS build
 
 # ___________________________________________________________________________________
 # 
