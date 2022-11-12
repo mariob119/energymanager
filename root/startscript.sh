@@ -110,6 +110,8 @@ chmod -R 777 /var/lib/influxdb
 chmod -R 777 /var/lib/grafana
 chmod -R 777 /run/mosquitto
 
+# Start SSH
+service ssh start
 
 echo ""
 echo "Run solaranzeige.process"

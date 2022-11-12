@@ -43,9 +43,7 @@ ENV USER_ID="99" \
     CLEANUP="/tmp/* /var/tmp/* /var/log/* /var/lib/apt/lists/* /var/lib/{apt,dpkg,cache,log}/ /var/cache/apt/archives /usr/share/doc/ /usr/share/man/ /usr/share/locale/ "
 
 # Copy files in the right directory
-COPY root/entrypoint.sh /
-RUN chmod +x entrypoint.sh
-RUN cp entrypoint.sh /usr/local/bin
+
 COPY root/solaranzeige.process /usr/local/bin/solaranzeige.process
 COPY root/solaranzeige.update /usr/local/bin/solaranzeige.update
 COPY root/solaranzeige.setup /usr/local/bin/solaranzeige.setup
@@ -105,8 +103,7 @@ RUN grafana-cli plugins install fetzerch-sunandmoon-datasource \
     && grafana-cli plugins install agenty-flowcharting-panel 
 
 ### alter permissions
-RUN chmod +x /usr/local/bin/entrypoint.sh \
-    && chmod +x /usr/local/bin/solaranzeige.process \
+RUN chmod +x /usr/local/bin/solaranzeige.process \
     && chmod +x /usr/local/bin/solaranzeige.update \
     && chmod +x /usr/local/bin/solaranzeige.setup \
     && chmod +x /usr/local/bin/pvforecast.update 
@@ -132,15 +129,26 @@ RUN chmod +x /usr/local/bin/update \
 # Copy tempFiles into linux
 COPY tempFiles/ /tempFiles
 
-# Energymanager directory
-RUN mkdir energymanager
-COPY energymanager/ /energymanager
+# Create startscript
+COPY root/startscript.sh /
+RUN chmod +x startscript.sh
+RUN cp startscript.sh /usr/local/bin
+RUN chmod +x /usr/local/bin/startscript.sh
 
 # Directory cleanup
-RUN rm entrypoint.sh
+RUN rm startscript.sh
+
+# Install ssh
+RUN apt-get update
+RUN apt-get install systemctl
+RUN apt-get install openssh-server -y
+COPY root/sshd_config /etc/ssh/sshd_config
+
+# Set password
+RUN echo "root:root" | chpasswd
 
 # Set entrypoint
-ENTRYPOINT [ "/usr/local/bin/entrypoint.sh" ]
+ENTRYPOINT [ "/usr/local/bin/startscript.sh" ]
 
 VOLUME /solaranzeige
 VOLUME /pvforecast
@@ -150,3 +158,4 @@ VOLUME /var/lib/grafana
 
 EXPOSE 3000
 EXPOSE 1883
+EXPOSE 22
