@@ -38,12 +38,17 @@ if ! getent group ${GROUP_ID}; then
   echo "${USERNAME}:x:${GROUP_ID}:" >> /etc/group
 fi
 
-if [[ ! -f /var/www/html/user.config.php ]]; then
+# If there is no 1.user.config.php, then it is a first 
+# time run and the setup has to be done!
+if [[ ! -f /var/www/html/1.user.config.php ]]; then
   cd /usr/local/bin
   sed -i -e 's/\r$//' solaranzeige.setup
   /usr/local/bin/solaranzeige.setup
 fi
 
+echo ""
+echo "Create missing files afterpossible Container Update"
+echo ""
 #Install Missing Files after possible Container Update
 if [[ ! -f /var/www/html/pheditor.php ]]; then
   echo "create new files/directories..."
@@ -75,8 +80,6 @@ if [[ ! -f /var/www/html/pheditor.php ]]; then
   sed -i -e 's/\r$//' solaranzeige.update
   su -s /bin/bash -c "TERM=xterm /usr/local/bin/solaranzeige.update"
   cd /usr/local/bin
-  sed -i -e 's/\r$//' pvforecast.update
-  su -s /bin/bash -c "TERM=xterm /usr/local/bin/pvforecast.update"
   curl -s 'https://raw.githubusercontent.com/DeBaschdi/solar_config/master/html/index.php' > /var/www/html/index.php
   curl -s 'https://raw.githubusercontent.com/DeBaschdi/solar_config/master/html/pheditor.php' > /var/www/html/pheditor.php
   UPDATE='no'
@@ -84,7 +87,6 @@ fi
 
 if [[ "${UPDATE}" = "yes" ]]; then
   /usr/local/bin/solaranzeige.update
-  /usr/local/bin/pvforecast.update
   curl -s 'https://raw.githubusercontent.com/DeBaschdi/solar_config/master/html/index.php' > /var/www/html/index.php
 fi
 
@@ -108,4 +110,9 @@ chmod -R 777 /var/lib/influxdb
 chmod -R 777 /var/lib/grafana
 chmod -R 777 /run/mosquitto
 
+
+echo ""
+echo "Run solaranzeige.process"
+cd /usr/local/bin
+sed -i -e 's/\r$//' solaranzeige.process
 su -s /bin/bash -c "TERM=xterm /usr/local/bin/solaranzeige.process"

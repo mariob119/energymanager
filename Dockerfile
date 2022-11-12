@@ -1,11 +1,24 @@
 FROM amd64/debian:bullseye-slim AS build
 
-# _______________________________________________________________________
+# ___________________________________________________________________________________
 # 
 # Notes
+#
+# The name of the base project is Solaranzeige
+# This project was created by Ulrich Kunz and due to the integration
+# of an update function, a part of it is still maintained by him!
+# The website for further in formation is: solaranzeige.de
+#
 # The base image for this project is takealug/solaranzeige
 # The creator of the base image is Bastian Kleinschmidt <debaschdi@googlemail.com>
-# _______________________________________________________________________
+#
+# The new name of this project is energymanager
+#
+# This project was initiated by Mario Beisteiner 
+# Github Account: mariob119
+# Github repository: mariob119/energymanager
+# Maintainer: Mario Beisteiner
+# ___________________________________________________________________________________
 
 # Labels
 LABEL org.label-schema.docker.dockerfile="/Dockerfile" \
@@ -77,14 +90,6 @@ RUN apt install -y influxdb grafana mosquitto mosquitto-clients libmosquitto-dev
     && pecl install Mosquitto-alpha \
     && echo "extension=mosquitto.so" | tee -a /etc/php/7.4/mods-available/mosquitto.ini 
 
-### install PVForecast depedencies
-RUN apt-get install -qy python3-pip python3-elementpath python3-protobuf netcdf-bin python3-bs4 python3-requests python3-numpy python3-pandas python3-h5py python3-tables python3-netcdf4 python3-scipy python3-influxdb python3-setuptools python3-astral python3-wheel python3-wrapt python3-yaml python3-isodate \
-    && python3 -m pip install pip --upgrade \
-    && python3 -m pip install pysolcast \
-    && python3 -m pip install astral --upgrade \
-    && python3 -m pip install siphon --upgrade \
-    && python3 -m pip install pvlib 
-
 ### configure system
 RUN update-ca-certificates --fresh \
     && phpenmod mosquitto \
@@ -113,17 +118,28 @@ RUN apt-get remove --purge -qy ${BUILD_DEPENDENCIES} \
     && apt-get -qy autoremove --purge \
     && rm -rf ${CLEANUP}
 
+# Copy files
 COPY root/update /usr/local/bin/update
 COPY root/truncate_log /usr/local/bin/truncate_log
 COPY root/solaranzeige_cron /etc/cron.d/solaranzeige_cron
 
+# Get permissions
 RUN chmod +x /usr/local/bin/update \
     && chmod +x /usr/local/bin/truncate_log \
     && chmod 0644 /etc/cron.d/solaranzeige_cron \
     && crontab /etc/cron.d/solaranzeige_cron
 
+# Copy tempFiles into linux
 COPY tempFiles/ /tempFiles
 
+# Energymanager directory
+RUN mkdir energymanager
+COPY energymanager/ /energymanager
+
+# Directory cleanup
+RUN rm entrypoint.sh
+
+# Set entrypoint
 ENTRYPOINT [ "/usr/local/bin/entrypoint.sh" ]
 
 VOLUME /solaranzeige

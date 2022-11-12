@@ -227,7 +227,7 @@
 //
 //  ---------------------------------------------------------------------------
 //
-$Regler = "0";
+$Regler = "80"
 //
 /******************************************************************************
 //  Raspberry Gerätenummer   Raspberry Gerätenummer   Raspberry Gerätenummer
@@ -270,8 +270,8 @@ $PylonTech = "2000";  //                                Regler = "41"
 //  -------------------------------------------------------------------
 //  Bitte die Daten aus dem Gerät übernehmen
 //
-$WR_IP = "0.0.0.0";  //  Keine führenden Nullen!  67.xx Ja!, 067.xx Nein!
-$WR_Port = "12345";
+$WR_IP = "192.168.30.105";  //  Keine führenden Nullen!  67.xx Ja!, 067.xx Nein!
+$WR_Port = "502";
 $WR_Adresse = "1";   //  Achtung Adresse als Hexzahl eingeben / Dez 16 = Hex 10
 //                       Maximal "FF" = 256   
 /*****************************************************************************/
@@ -684,7 +684,7 @@ $aWATTarLand = "DE";     // "DE" = Deutschland   "AT" = Österreich
 //  USB Device, die automatisch erkannt wurde...  bitte nicht ändern
 //  Wird nicht bei der Multi-Regler-Version benötigt.
 //
-$USBRegler         = "/dev/ttyUSB0";
+$USBRegler         = "Ethernet";
 //
 //  Nur wenn die automatischer Erkennung nicht funktioniert hat, bitte manuell
 //  eintragen. Im Normalfall wird das nicht benötigt. So lassen wie es ist.
@@ -703,7 +703,7 @@ $USBDevice = "";
 ******************************************************************************/
 // Bitte nicht ändern, wird automatisch ermittelt.
 //
-$Platine = "Raspberry unbekannt";
+$Platine = "Raspberry Pi 4 Model B Rev 1.4";
 //
 /******************************************************************************
 //  PHP Error Reporting        PHP Error Reporting        PHP Error Reporting
@@ -716,3 +716,4 @@ $Platine = "Raspberry unbekannt";
 $Alpha_ESS = 0;
 // ENDE ENDE ENDE ENDE ENDE ENDE ENDE ENDE ENDE ENDE ENDE ENDE ENDE ENDE ENDE
 ?>
+

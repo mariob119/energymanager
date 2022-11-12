@@ -1,9 +1,10 @@
 #!/bin/bash
-echo "##################################"
-echo "# Initial Setup for Solaranzeige #"
-echo "##################################"
 echo ""
+echo "###################################"
+echo "# First time run of Energymanager #"
+echo "###################################"
 
+echo ""
 echo "create necessary files/directories..."
 mkdir -p /tmp/git &>/dev/null
 mkdir -p /var/www/html &>/dev/null
@@ -42,11 +43,17 @@ chmod -R 777 /var/lib/grafana
 chmod -R 777 /pvforecast
 chmod -R 777 /run/mosquitto
 
+echo ""
+echo "###############"
+echo "Update Process"
+echo ""
+
+cd /usr/local/bin
+sed -i -e 's/\r$//' solaranzeige.update
 su -s /bin/bash -c "TERM=xterm /usr/local/bin/solaranzeige.update"
 
 echo ""
-echo "Installing PVForecast..."
-su -s /bin/bash -c "TERM=xterm /usr/local/bin/pvforecast.update"
+echo "###############"
 
 chmod +x /solaranzeige/setup
 chmod +x /solaranzeige/statusmail
@@ -76,3 +83,6 @@ echo "##########################################################################
 echo ""
 
 tail -f /var/www/log/solaranzeige.log
+
+echo ""
+echo "###################################"
