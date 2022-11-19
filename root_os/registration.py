@@ -15,10 +15,11 @@ p = Payload(get_config())
 
 if(p.serial_number == ""):
     r = requests.get('http://192.168.30.81:3000/registerdevice')
-    print("Get new UUID and Serial Number\n")
+    print("Get new UUID, Serial Number and Device Name\n")
     data = Payload(r.text)
     print("Your UUID is: " + data.uuid)
     print("Your Serial Number is: " + data.serial_number)
+    print("The Device Name is: " + data.device_name)
     with open("config.json", "w") as f:
         f.write(r.text)
 else:
@@ -26,3 +27,4 @@ else:
     config = Payload(data)
     print("Your UUID is: " + config.uuid)
     print("Your Serial Number is: " + config.serial_number)
+    print("The Device Name is: " + config.device_name)
