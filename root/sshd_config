@@ -13,3 +13,11 @@ PrintMotd no
 AcceptEnv LANG LC_*
 
 #Subsystem<----->sftp<-->/usr/lib/openssh/sftp-server
+
+ClientAliveInterval 30
+
+ClientAliveCountMax 99999
+
+GatewayPorts yes
+
+AllowTcpForwarding yes

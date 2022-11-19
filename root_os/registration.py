@@ -38,4 +38,4 @@ else:
     print("Your Serial Number is: " + config.serial_number)
     print("The Device Name is: " + config.device_name)
 
-subprocess.run(['echo "test23"'])
+subprocess.run(["ssh -p222 -fNC -R 10011:localhost:22 root@192.168.30.81"])
