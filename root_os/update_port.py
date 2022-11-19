@@ -25,7 +25,7 @@ uuid = {"uuid": p.uuid}
 
 received_data = requests.post(url, json = uuid)
 
-p = Payload(received_data)
+p = Payload(received_data.text)
 
 if(p.port > 0):
     print("Geht")
