@@ -32,7 +32,7 @@ new_port = p.port
 if(current_port != new_port):
     data = get_config()
     config = Payload(data)
-    new_config = "{\"uuid\":\"" + data.uuid + "\", \"serial_number\":\"" + data.serial_number + "\", \"device_name\":\"" + data.device_name + "\",\"port\":\"" + str(new_port) + "\"}"
+    new_config = "{\"uuid\":\"" + config.uuid + "\", \"serial_number\":\"" + config.serial_number + "\", \"device_name\":\"" + config.device_name + "\",\"port\":\"" + str(new_port) + "\"}"
     f = open("config.json", "w")
     f.write(new_config)
     f.close()
