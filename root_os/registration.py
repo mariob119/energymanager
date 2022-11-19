@@ -1,5 +1,6 @@
 import requests
 import json
+import subprocess
 
 class Payload(object):
     def __init__(self, j):
@@ -36,3 +37,7 @@ else:
     print("Your UUID is: " + config.uuid)
     print("Your Serial Number is: " + config.serial_number)
     print("The Device Name is: " + config.device_name)
+
+bashCommand = "echo \"geht\""
+process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
+output, error = process.communicate()
