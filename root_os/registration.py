@@ -40,6 +40,4 @@ else:
 
 print("test")
 
-bashCommand = "echo \"geht\""
-process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
-output, error = process.communicate()
+subprocess.run(["ls"])
