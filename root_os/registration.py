@@ -11,10 +11,18 @@ def get_config():
             data = line
     return data
 
+def get_url():
+    with open("url.json", "r") as read_file:
+        for line in read_file:
+            data = line
+    data = Payload(data)
+    url = data.url
+    return url
+
 p = Payload(get_config())
 
 if(p.serial_number == ""):
-    r = requests.get('http://192.168.30.81:3000/registerdevice')
+    r = requests.get(get_url() + "/registerdevice")
     print("Get new UUID, Serial Number and Device Name\n")
     data = Payload(r.text)
     print("Your UUID is: " + data.uuid)
