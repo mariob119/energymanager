@@ -38,6 +38,4 @@ else:
     print("Your Serial Number is: " + config.serial_number)
     print("The Device Name is: " + config.device_name)
 
-print("test")
-
-subprocess.run(["ls"])
+subprocess.run(["echo \"test123\""])
