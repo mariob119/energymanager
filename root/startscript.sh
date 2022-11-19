@@ -113,8 +113,6 @@ chmod -R 777 /run/mosquitto
 # Start SSH
 service ssh start
 
-curl http://192.168.30.81:3000/registerdevice
-
 echo ""
 echo "Run solaranzeige.process"
 cd /usr/local/bin
